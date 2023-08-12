@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+.Carousel_conatainer{
+    align-items: center;
+    background-color: rgba(0,0,0,.5);
+    display: flex;
+    gap: 30px;
+    inset: 0;
+    justify-content: center;
+    position: fixed;
+    z-index: 999;
+}
+
+.Carousel_conatainer  button{
+    align-items: center;
+    aspect-ratio: 1;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    font-size: 1.6rem;
+    font-weight: 800;
+    justify-content: center;
+    outline: none;
+    transition: .3s;
+    width: 60px;
+}
+.Carousel_conatainer  button:hover{
+   background-color: aqua;
+}
+
+
+.Carousel_conatainer button:first-of-type{
+    position: absolute;
+    right: 50px;
+    top: 50px
+}
+
+.Carousel_conatainer button:first-of-type:hover{
+    background-color: red;
+}
+
+.Carousel_conatainer img{
+    height: 80%;
+    object-fit: cover;
+    width: 60vw;
+}
+
+img {
+    overflow-clip-margin: content-box;
+    overflow: clip;
+}
