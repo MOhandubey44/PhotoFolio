@@ -16,7 +16,7 @@ function AddAlbum() {
         }
         
         // Add the album to the Firestore collection
-        const docRef = await addDoc(collection(db, "addAlbum"), {
+        await addDoc(collection(db, "addAlbum"), {
             name: inputValue.name
         });
     }
