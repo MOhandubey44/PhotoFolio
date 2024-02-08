@@ -1,6 +1,6 @@
 import AddAlbum from "./AddAlbumForm"; // Import the AddAlbumForm component
 import { useEffect, useState } from "react";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import styles from "./AlbumList.module.css";
 import { db } from "../../FirBaseInit";
 import { collection, onSnapshot } from "firebase/firestore";
@@ -21,7 +21,7 @@ function AlbumsList() {
 
   useEffect(() => {
     // Track an event when the component mounts
-    ReactGA.pageview(window.location.pathname + window.location.search);
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname, title: "Custom Title" });
     Mixpanel.track("Page View", { page: "MyComponent" });
 
     const unsubscribe = onSnapshot(collection(db, "addAlbum"), (snapshot) => {
