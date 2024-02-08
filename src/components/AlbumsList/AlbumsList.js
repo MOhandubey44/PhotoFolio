@@ -40,7 +40,6 @@ function AlbumsList() {
   // Function to handle selecting an album
   const handleAlbumClick = (album) => {
     Mixpanel.track("Album Selected", { albumName: album.name });
-    ReactGA.pageview(window.location.pathname + window.location.search);
     setSelectedAlbum(album);
     setIsAlbumInside(true);
   };
