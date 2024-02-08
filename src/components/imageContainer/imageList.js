@@ -77,7 +77,7 @@ export default function ImageList(props) {
   return (
     <>
       {isBack ? (
-        <AlbumsList /> // Render AlbumsList component if isBack is true
+        <AlbumsList /> 
       ) : (
         <div className={styles.App_content}>
           <div className={styles.imageList_Top}>
@@ -129,7 +129,7 @@ export default function ImageList(props) {
           )}
 
           <div className={styles.imagelist_Container}>
-            {/* Map and render each image */}
+          
             {imageList.map((image, index) => (
               <div
                 key={image.id}

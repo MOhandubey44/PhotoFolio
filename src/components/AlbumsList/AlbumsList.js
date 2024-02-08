@@ -1,27 +1,36 @@
 import AddAlbum from "./AddAlbumForm"; // Import the AddAlbumForm component
 import { useEffect, useState } from "react";
+import ReactGA from "react-ga";
 import styles from "./AlbumList.module.css";
 import { db } from "../../FirBaseInit";
 import { collection, onSnapshot } from "firebase/firestore";
+import Mixpanel from "mixpanel-browser";
 
 import ImageList from "../imageContainer/imageList"; // Import the ImageList component
+// const Mixpanel = require("mixpanel");
 
 function AlbumsList() {
-  const [isAddAlbum, setIsAddAlbum] = useState(true); // State to control adding an album
-  const [albumsList, setAlbumList] = useState([]); // State to store the list of albums
-  const [isAlbumInside, setIsAlbumInside] = useState(false); // State to indicate if an album is selected
-  const [selectedAlbum, setSelectedAlbum] = useState(null); // State to store the selected album's data
+  const [isAddAlbum, setIsAddAlbum] = useState(true);
+  const [albumsList, setAlbumList] = useState([]);
+  const [isAlbumInside, setIsAlbumInside] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
+
+  // useEffect(() => {
+  //   mixpanel.track("Page View", { pageName: "AlbumList" });
+  // }, []);
 
   useEffect(() => {
-    // Use Firestore's onSnapshot to listen for changes in the 'addAlbum' collection
+    // Track an event when the component mounts
+   
+    ReactGA.pageview(window.location.pathname + window.location.search);
+    Mixpanel.track("Page View", { page: "MyComponent" });
+
     const unsubscribe = onSnapshot(collection(db, "addAlbum"), (snapshot) => {
-      // Create an array of albums with IDs and data from the snapshot
       const albumList = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
 
-      // Update the albumsList state with the fetched album data
       setAlbumList(albumList);
     });
 
@@ -31,27 +40,30 @@ function AlbumsList() {
 
   // Function to handle selecting an album
   const handleAlbumClick = (album) => {
-    setSelectedAlbum(album); // Set the selected album
-    setIsAlbumInside(true); // Set isAlbumInside to true to display the images inside the album
+    Mixpanel.track("Album Selected", { albumName: album.name });
+    ReactGA.pageview(window.location.pathname + window.location.search);
+    setSelectedAlbum(album);
+    setIsAlbumInside(true);
   };
 
   // Function to handle the "Add Album" button click
   const handleAddAlbumClick = () => {
-    setIsAddAlbum(false); // Set isAddAlbum to false to display the AddAlbumForm component
+    Mixpanel.track("Add Album Click");
+    setIsAddAlbum(false);
   };
 
   // Function to handle the "Cancel" button click
   const handleCancelClick = () => {
-    setIsAddAlbum(true); // Set isAddAlbum to true to go back to the albums list view
+    setIsAddAlbum(true);
   };
 
   return (
     <>
-      {isAlbumInside ? ( // Display ImageList if an album is selected, else display the albums list
+      {isAlbumInside ? (
         <ImageList id={selectedAlbum.id} name={selectedAlbum.name} />
       ) : (
         <div className={styles.albumsList}>
-          {isAddAlbum ? null : <AddAlbum />} {/* Display AddAlbumForm if isAddAlbum is false */}
+          {isAddAlbum ? null : <AddAlbum />}
           <div className={styles.albumList_top}>
             <h3>Your Albums</h3>
             <button
