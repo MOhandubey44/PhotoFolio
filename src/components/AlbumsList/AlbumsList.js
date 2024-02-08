@@ -21,7 +21,6 @@ function AlbumsList() {
 
   useEffect(() => {
     // Track an event when the component mounts
-   
     ReactGA.pageview(window.location.pathname + window.location.search);
     Mixpanel.track("Page View", { page: "MyComponent" });
 
@@ -65,7 +64,7 @@ function AlbumsList() {
         <div className={styles.albumsList}>
           {isAddAlbum ? null : <AddAlbum />}
           <div className={styles.albumList_top}>
-            <h3>Your Albums</h3>
+            <h3>Your Albums: </h3>
             <button
               className={isAddAlbum ? styles.addAlbum : styles.cancel}
               onClick={isAddAlbum ? handleAddAlbumClick : handleCancelClick}
